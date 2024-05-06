@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-const ADD_VOTE = 1;
 
 const PartyCard = ({
   party,
@@ -12,69 +11,78 @@ const PartyCard = ({
   isCurrentlyVoting,
   setIsCurrentlyVoting
 }) => {
-  const [isCurrentlyVotingCard, setIsCurrentlyVotingCard] = useState(false);
+  const [voteStatusMessage, setVoteStatusMessage] = useState(""); // 투표 상태 메시지 상태
 
+  // 투표 추가 함수
   const handleAddVote = () => {
-
-    setIsCurrentlyVoting(false);
-    setIsCurrentlyVotingCard(false) 
-
-    const allParties = allVotes.map((candidate) => {
-
-      if (candidate.name === party.name) {
-        candidate.votes += ADD_VOTE;
-        candidate.voters.push(voter.id);
-        setIsAbleToVote(false);
+    const updatedVotes = allVotes.map(candidate => {
+      if (candidate.id === party.id) {
+        candidate.votes += 1;  // 투표 수 증가
+        candidate.voters.push(voter.id);  // 투표자 ID 추가
       }
+      return candidate;
+    });
+  
+    setVote(updatedVotes);  // 상태 업데이트
+    setIsAbleToVote(false); // 투표 불가 상태로 변경
+    setVoteStatusMessage("투표완료");  // 투표 완료 메시지 설정
+    setIsCurrentlyVoting(false); // 현재 투표 상태 비활성화
+  };
 
+  // 투표 확정 시작 함수
+  const startConfirmVote = () => {
+    setIsCurrentlyVoting(true);
+  };
+
+  // 투표 취소 함수
+  const cancelVote = () => {
+    setIsCurrentlyVoting(false);
+    setVoteStatusMessage(""); // 메시지 초기화
+  };
+
+  // 투표 취소 함수 (기존 투표 제거)
+  const handleRemoveVote = () => {
+    const updatedVotes = allVotes.map(candidate => {
+      if (candidate.voters.includes(voter.id)) {
+        const index = candidate.voters.indexOf(voter.id);
+        if (index > -1) {
+          candidate.voters.splice(index, 1);
+          candidate.votes -= 1; // 투표 수 감소
+        }
+      }
       return candidate;
     });
 
-    setVote(allParties);
-
-  };
-
-  const handleClickVote = () => {
-    setIsCurrentlyVoting(true);
-
-    setIsCurrentlyVotingCard(true)
-
-  };
-
-  const handleClickCancel = () => {
-
-    setIsCurrentlyVoting(false);
-
-    setIsCurrentlyVotingCard(false) 
-
+    setVote(updatedVotes); // 전체 투표 상태 업데이트
+    setIsAbleToVote(true); // 투표 가능 상태로 변경
+    setVoteStatusMessage(""); // "투표완료" 메시지 초기화
   };
 
   return (
     <div className="card">
-      <h4>votes: {party.votes}</h4>
+      <h4>{voteStatusMessage}</h4>
       <img src={party.img} alt={party.name} />
       <h3>{party.name}</h3>
+      <div className="additional-info">
+        <p>한줄소개해주세요 {party.additionalInfo}</p>
+      </div>
       {!isCurrentlyVoting && isAbleToVote && (
-        <button onClick={handleClickVote} className="btn">
+        <button onClick={startConfirmVote} className="btn">
           Vote
         </button>
       )}
-      {isCurrentlyVoting && isCurrentlyVotingCard && (
-
+      {isCurrentlyVoting && (
         <div className="currently-vote-container">
-
           <button onClick={handleAddVote} className="btn">
             I'm Sure
           </button>
-          <button onClick={handleClickCancel} className="btn">
+          <button onClick={cancelVote} className="btn">
             Cancel
           </button>
-          
         </div>
-
       )}
       {!isAbleToVote && (
-        <button onClick={() => removeVote()} className="btn">
+        <button onClick={handleRemoveVote} className="btn">
           Change my Vote!
         </button>
       )}

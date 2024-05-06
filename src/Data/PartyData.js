@@ -6,28 +6,28 @@ import cellImage from "../assets/images/cell-party.png";
 const partyVotes = [
     {
       id: 'eladjmc1',
-      name: 'Goku',
+      name: '후보자1',
       votes: 0,
       img: gokuImage,
       voters: []
     },
     {
       id: 'eladjmc2',
-      name: 'Vegeta',
+      name: '후보자2',
       votes: 0,
       img: vegetaImage,
       voters: []
     },
     {
       id: 'eladjmc3',
-      name: 'Gohan',
+      name: '후보자3',
       votes: 0,
       img: gohanImage,
       voters: []
     },
     {
       id: 'eladjmc4',
-      name: 'Cell',
+      name: '후보자4',
       votes: 0,
       img: cellImage,
       voters: []

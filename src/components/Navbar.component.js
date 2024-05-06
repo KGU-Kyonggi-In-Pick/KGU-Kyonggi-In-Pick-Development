@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FaUserCircle, FaCaretDown } from "react-icons/fa";
-import Logo from "../assets/images/logonav.png";
+import Logo from "../assets/images/logo.png";
 
 import Wrapper from "../styles/styled/Navbar.styled";
 
@@ -8,7 +8,7 @@ import PAGES from "../constants";
 
 const ADMIN_USER = "admin";
 
-const [vote, , admin] = PAGES;
+const [vote, login, admin, results, voteLog, main, voteCreate] = PAGES; // voteCreate 페이지 추가
 
 const Navbar = ({ user, setUser, setCurrentPage }) => {
   const [showLogout, setShowLogout] = useState(false);
@@ -31,10 +31,12 @@ const Navbar = ({ user, setUser, setCurrentPage }) => {
   const handleLogout = () => {
     setUser({ name: "", type: "", email: "", id: "" });
   };
-
+  const handleClickedResults = () => setCurrentPage(results);
   const handleClickedVote = () => setCurrentPage(vote);
-
+  const handleClickedVoteLog = () => setCurrentPage(voteLog);
   const handleClickedAdmin = () => setCurrentPage(admin);
+  const handleClickedMain = () => setCurrentPage(main); // main 페이지로 이동하는 함수 추가
+  const handleClickedCreate = () => setCurrentPage(voteCreate); // 투표생성페이지 이동에 사용
 
   const isAdmin = () => user.type === ADMIN_USER;
   const adminsBtn = () => (isAdmin() ? "" : "not-admin-btn");
@@ -64,6 +66,9 @@ const Navbar = ({ user, setUser, setCurrentPage }) => {
             >
               logout
             </button>
+            <button type="button" className="dropdown-btn" onClick={handleClickedResults}>
+              투표 결과
+            </button>
 
             <button
               type="button"
@@ -79,6 +84,23 @@ const Navbar = ({ user, setUser, setCurrentPage }) => {
               onClick={handleClickedAdmin}
             >
               Admin
+            </button>
+            <button type="button" className={"dropdown-btn"} onClick={handleClickedVoteLog}>
+              Vote Log
+            </button>
+            <button
+              type="button"
+              className="dropdown-btn"
+              onClick={handleClickedMain} // main 페이지로 이동하는 버튼 추가
+            >
+              Main
+            </button>
+            <button
+              type="button"
+              className="dropdown-btn"
+              onClick={handleClickedCreate} // vote Create 페이지로 이동하는 버튼 추가
+            >
+              Vote Create
             </button>
           </div>
         </div>
