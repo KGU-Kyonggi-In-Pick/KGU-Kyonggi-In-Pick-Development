@@ -188,7 +188,14 @@ ul {
 }
 
 .logo {
-  width: 15rem;
+  .logo {
+    width: 10rem; /* 로고의 폭을 10rem으로 설정 */
+    height: auto; /* 높이는 자동으로 설정하여 비율을 유지 */
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 1.38rem; /* 필요에 따라 마진 조정 */
+  }
+  
 }
 
 /* buttons */

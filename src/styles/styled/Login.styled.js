@@ -7,6 +7,8 @@ const Wrapper = styled.section`
     display: block;
     margin: 0 auto;
     margin-bottom: 1.38rem;
+    width: 100px; // 로고의 폭을 100px로 설정
+    height: auto; // 로고의 높이를 자동으로 조절하여 비율을 유지
   }
   .form {
     max-width: 400px;
@@ -67,4 +69,6 @@ const Wrapper = styled.section`
     letter-spacing: var(--letterSpacing);
   }
 `;
+
 export default Wrapper;
+
