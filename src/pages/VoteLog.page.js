@@ -13,7 +13,7 @@ const VoteLog = () => {
       <div className="vote-log-container">
         {votes.map((vote, index) => (
           <div key={index} className={"vote-log-item " + getEvenClass(index)}>
-            <p>{vote.StudentId}님이
+            <p>{vote.StudentID}님이
             {vote.Voted ? " 투표했습니다." : " 투표하지 않았습니다."}</p>
           </div>
         ))}

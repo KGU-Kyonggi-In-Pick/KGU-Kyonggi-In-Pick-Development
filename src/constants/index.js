@@ -1,3 +1,2 @@
-
-const PAGES = ['vote', 'login', 'admin'];
-export default PAGES
+const PAGES = ['vote', 'login', 'admin', 'result', 'voteLog', 'main'];
+export default PAGES;

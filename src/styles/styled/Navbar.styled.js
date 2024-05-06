@@ -9,17 +9,20 @@ const Wrapper = styled.nav`
   align-items: center;
   justify-content: center;
   box-shadow: 0 1px 0px 0px rgba(0, 0, 0, 0.1);
+
   .logo {
     display: flex;
     align-items: center;
     width: 200px;
   }
+
   .nav-center {
     display: flex;
     width: 90vw;
     align-items: center;
     justify-content: space-between;
   }
+
   .toggle-btn {
     background: transparent;
     border-color: transparent;
@@ -29,10 +32,13 @@ const Wrapper = styled.nav`
     display: flex;
     align-items: center;
   }
+
   background: var(--white);
+
   .btn-container {
     position: relative;
   }
+
   .btn {
     display: flex;
     align-items: center;
@@ -43,12 +49,14 @@ const Wrapper = styled.nav`
     border: 1.5px solid transparent;
     transition: all 0.2s;
   }
+
   .btn:hover {
     color: var(--red-dark);
     background-color: white;
     border: 1.5px solid var(--red-dark);
     box-sizing: border-box;
   }
+
   .dropdown {
     position: absolute;
     bottom: -105px;
@@ -64,31 +72,14 @@ const Wrapper = styled.nav`
     transition: transform 0.2s;
     border-radius: var(--borderRadius);
   }
-  .show-dropdown {
-    transform: scaleY(1) scaleX(1);
-  }
-  .dropdown-btn {
-    border-radius: var(--borderRadius);
-    box-shadow: var(--shadow-2);
-    width: 100%;
-    height: 30px;
-    background-color: white;
-    border-color: transparent;
-    color: var(--red-dark);
-    letter-spacing: var(--letterSpacing);
-    border: var(--red-dark) solid 1px;
-    text-transform: capitalize;
-    cursor: pointer;
-  }
 
-  .dropdown-btn:hover {
-    background-color: #f3adb3;
-    border: var(--red-dark) solid 1px;
-  }
+ 
+
   .logo-text {
     display: none;
     margin: 0;
   }
+
   @media (min-width: 992px) {
     position: sticky;
     top: 0;
@@ -97,6 +88,7 @@ const Wrapper = styled.nav`
     .nav-center {
       width: 90%;
     }
+
     .logo-text {
       display: block;
     }
@@ -106,9 +98,11 @@ const Wrapper = styled.nav`
     .btn {
       transform: scale(1.5);
     }
+
     .dropdown {
       top: 45px;
     }
+
     .show-dropdown {
       transform: scale(1.5);
     }
@@ -128,10 +122,11 @@ const Wrapper = styled.nav`
     #fff,
     var(--red-dark)
   );
-
   box-shadow: 0px 6px 7px -7px rgba(0, 0, 0, 0.95);
+
   .not-admin-btn {
     visibility: hidden;
   }
 `;
+
 export default Wrapper;

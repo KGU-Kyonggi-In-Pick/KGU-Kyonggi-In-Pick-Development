@@ -1,24 +1,28 @@
 import { useEffect, useState } from "react";
 import { FaUserCircle, FaCaretDown } from "react-icons/fa";
 import Logo from "../assets/images/logo.png";
-
 import Wrapper from "../styles/styled/Navbar.styled";
-
 import PAGES from "../constants";
 
 const ADMIN_USER = "admin";
-
-const [vote, login, admin, results, voteLog, main, voteCreate] = PAGES; // voteCreate 페이지 추가
+const [vote, login, admin, results, voteLog, main] = PAGES;
+const EMPTY_USER = { StudentID: "", name: "", password: "" };
 
 const Navbar = ({ user, setUser, setCurrentPage }) => {
   const [showLogout, setShowLogout] = useState(false);
 
   useEffect(() => {
     const closeNavbar = (event) => {
-      if (!showLogout) {
-        return;
+      const dropdownElement = document.querySelector(".dropdown");
+      const logoutButton = document.querySelector(".dropdown-btn[onClick*='handleLogout']");
+
+      if (
+        !dropdownElement.contains(event.target) &&
+        !event.target.matches(".dropdown-btn[onClick*='handleLogout']") &&
+        !logoutButton?.contains(event.target)
+      ) {
+        setShowLogout(false);
       }
-      setShowLogout(false);
     };
 
     document.body.addEventListener("click", closeNavbar);
@@ -29,17 +33,16 @@ const Navbar = ({ user, setUser, setCurrentPage }) => {
   }, [showLogout]);
 
   const handleLogout = () => {
-    setUser({ name: "", type: "", email: "", id: "" });
+    setUser(EMPTY_USER);
   };
+
   const handleClickedResults = () => setCurrentPage(results);
   const handleClickedVote = () => setCurrentPage(vote);
   const handleClickedVoteLog = () => setCurrentPage(voteLog);
   const handleClickedAdmin = () => setCurrentPage(admin);
-  const handleClickedMain = () => setCurrentPage(main); // main 페이지로 이동하는 함수 추가
-  const handleClickedCreate = () => setCurrentPage(voteCreate); // 투표생성페이지 이동에 사용
+  const handleClickedMain = () => setCurrentPage(main);
 
   const isAdmin = () => user.type === ADMIN_USER;
-  const adminsBtn = () => (isAdmin() ? "" : "not-admin-btn");
 
   return (
     <Wrapper>
@@ -59,48 +62,23 @@ const Navbar = ({ user, setUser, setCurrentPage }) => {
             <FaCaretDown />
           </button>
           <div className={showLogout ? "dropdown show-dropdown" : "dropdown"}>
-            <button
-              type="button"
-              className="dropdown-btn"
-              onClick={handleLogout}
-            >
+            <button type="button" className="dropdown-btn" onClick={handleLogout}>
               logout
+            </button>
+            <button type="button" className="dropdown-btn" onClick={handleClickedMain}>
+              Main
+            </button>
+            <button type="button" className="dropdown-btn" onClick={handleClickedVote}>
+              vote
             </button>
             <button type="button" className="dropdown-btn" onClick={handleClickedResults}>
               투표 결과
             </button>
-
-            <button
-              type="button"
-              className={"dropdown-btn " + adminsBtn()}
-              onClick={handleClickedVote}
-            >
-              vote
-            </button>
-
-            <button
-              type="button"
-              className={"dropdown-btn " + adminsBtn()}
-              onClick={handleClickedAdmin}
-            >
-              Admin
-            </button>
-            <button type="button" className={"dropdown-btn"} onClick={handleClickedVoteLog}>
+            <button type="button" className="dropdown-btn" onClick={handleClickedVoteLog}>
               Vote Log
             </button>
-            <button
-              type="button"
-              className="dropdown-btn"
-              onClick={handleClickedMain} // main 페이지로 이동하는 버튼 추가
-            >
-              Main
-            </button>
-            <button
-              type="button"
-              className="dropdown-btn"
-              onClick={handleClickedCreate} // vote Create 페이지로 이동하는 버튼 추가
-            >
-              Vote Create
+            <button type="button" className={"dropdown-btn " + (isAdmin() ? "" : "not-admin-btn")} onClick={handleClickedAdmin}>
+              Admin
             </button>
           </div>
         </div>
@@ -108,4 +86,5 @@ const Navbar = ({ user, setUser, setCurrentPage }) => {
     </Wrapper>
   );
 };
+
 export default Navbar;

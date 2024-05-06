@@ -1,5 +1,4 @@
 // VoteData.component.js
-import React from "react";
 import users from "../Data/Data";
 
 const VoteData = () => {
@@ -15,5 +14,3 @@ const VoteData = () => {
 };
 
 export default VoteData;
-
-

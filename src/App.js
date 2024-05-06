@@ -1,7 +1,6 @@
-import { Login } from "./pages";
+import React, { useState, useEffect } from "react";
 import "./styles/App.css";
 import Data from "./Data/Data";
-import { useState, useEffect } from "react";
 import PAGES from "./constants/index";
 import Navbar from "./components/Navbar.component";
 import Vote from "./pages/Vote.page";
@@ -9,39 +8,40 @@ import VoteData from "./Data/PartyData";
 import Admin from "./pages/Admin.page";
 import Results from "./pages/Results.page";
 import VoteLog from "./pages/VoteLog.page";
-import Main from './pages/Main.page'; // Main 페이지 임포트
+import Main from './pages/Main.page'; // Main page import
+import Login from "./pages/Login.page"; // Assuming your Login page is in the pages folder
 
 const EMPTY_USER = {
-  id: "",
+  StudentID: "",
   name: "",
-  email: "",
+  password: "",
   type: "user",
 };
 
 const userInfo = JSON.parse(localStorage.getItem("loggedUser")) || EMPTY_USER;
 
-const [vote, login, admin, results, voteLog, main] = PAGES;
+const [vote, login, admin, results, voteLog, main] = PAGES; // Add main page constant
 
 const votesLocalData = JSON.parse(localStorage.getItem("voteData")) || VoteData;
 
 function App() {
   const [loggedUser, setLoggedUser] = useState(userInfo);
   const [currentPage, setCurrentPage] = useState(
-    userInfo.id === "" ? login : vote
+    userInfo.StudentID === "" ? login : main // Redirect to main if the user is already logged in
   );
-  const [votes, setVotes] = useState(votesLocalData);
 
+  const [votes, setVotes] = useState(votesLocalData);
+  
   useEffect(() => {
     localStorage.setItem("voteData", JSON.stringify(votes));
   }, [votes]);
 
   useEffect(() => {
     localStorage.setItem("loggedUser", JSON.stringify(loggedUser));
-
-    if (loggedUser.id === "") {
+    if (loggedUser.StudentID === "") {
       setCurrentPage(login);
     } else {
-      setCurrentPage(vote);
+      setCurrentPage(main); // Default page to redirect once logged in
     }
   }, [loggedUser]);
 
@@ -73,7 +73,7 @@ function App() {
       {isCurrentPage(results) && <Results users={database} candidatesList={votes} />}
       {isCurrentPage(admin) && <Admin users={database} candidatesList={votes} />}
       {isCurrentPage(voteLog) && <VoteLog votes={votes} />}
-      {isCurrentPage(main) && <Main />} {/* Main 페이지 렌더링 */}
+      {isCurrentPage(main) && <Main />} {/* Render Main page */}
     </div>
   );
 }
