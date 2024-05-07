@@ -75,7 +75,7 @@ const Navbar = ({ user, setUser, setCurrentPage }) => {
              Voting results
             </button>
             <button type="button" className="dropdown-btn" onClick={handleClickedVoteLog}>
-              Voting Log
+              Voting log
             </button>
             <button type="button" className={"dropdown-btn " + (isAdmin() ? "" : "not-admin-btn")} onClick={handleClickedAdmin}>
               Admin
