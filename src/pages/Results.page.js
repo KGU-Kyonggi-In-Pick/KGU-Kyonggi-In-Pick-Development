@@ -11,7 +11,7 @@ const Results = (props) => {
 
   return (
     <section className="results-page">
-      <h1>Voting results</h1>
+      <h1>Vote Results</h1>
       <StatisticsChart partiesData={candidatesList} />
       <div>
         <h3>최다 득표자: {maxVotesCandidate.name}</h3>
