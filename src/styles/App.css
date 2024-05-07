@@ -613,3 +613,54 @@ canvas {
   background-color: white;
   box-shadow: var(--shadow-3);
 }
+
+/* 결과 페이지의 특정 요소 스타일 조정 */
+.results-card {
+  position: relative;
+  background: var(--clr-white);
+  border-radius: var(--radius);
+  box-shadow: var(--dark-shadow);
+  padding: 0 0 1.5rem 0;
+  text-align: center;
+  border: #510f0f9e 3px solid;
+}
+
+.results-card:hover {
+  transform: scale(1.1);
+  transition: transform 0.3s linear;
+}
+
+.results-card img {
+  background-color: #510f0f84;
+  width: 300px;
+  border-top-left-radius: var(--radius);
+  border-top-right-radius: var(--radius);
+  object-fit: cover;
+  margin-bottom: 0.75rem;
+  border-bottom: var(--red-dark) 4px double;
+}
+
+.results-card .btn {
+  border: solid 1.5px transparent;
+  font-weight: bold;
+}
+
+.results-card .btn:hover {
+  border: solid 1.5px var(--red-dark);
+  font-weight: bold;
+}
+
+.results-card h3 {
+  margin: 0;
+  margin-bottom: 15px;
+}
+
+.results-card h4 {
+  position: absolute;
+  right: 10px;
+  top: 5px;
+  margin-bottom: 1.5rem;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--red-dark);
+}
