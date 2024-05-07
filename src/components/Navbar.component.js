@@ -63,19 +63,19 @@ const Navbar = ({ user, setUser, setCurrentPage }) => {
           </button>
           <div className={showLogout ? "dropdown show-dropdown" : "dropdown"}>
             <button type="button" className="dropdown-btn" onClick={handleLogout}>
-              logout
+              Logout
             </button>
             <button type="button" className="dropdown-btn" onClick={handleClickedMain}>
               Main
             </button>
             <button type="button" className="dropdown-btn" onClick={handleClickedVote}>
-              vote
+              Vote
             </button>
             <button type="button" className="dropdown-btn" onClick={handleClickedResults}>
-              투표 결과
+             Voting results
             </button>
             <button type="button" className="dropdown-btn" onClick={handleClickedVoteLog}>
-              Vote Log
+              Voting Log
             </button>
             <button type="button" className={"dropdown-btn " + (isAdmin() ? "" : "not-admin-btn")} onClick={handleClickedAdmin}>
               Admin
