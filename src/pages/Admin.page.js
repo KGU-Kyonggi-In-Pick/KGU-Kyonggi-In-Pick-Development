@@ -1,14 +1,26 @@
+// kyonggi--main/src/Pages/Admin.page.js
+
 import React, { useState, useEffect } from "react";
+import {
+  AdminHeader,
+  AdminContainer,
+  ContainerWrapper,
+  StyledButtonLarge,
+  StyledButtonSmall,
+  StyledDivCenter,
+} from "../styles/styled/Admin.styled";
 
 const Admin = () => {
-  const [votes, setVotes] = useState([]);
+  const [votes, setVotes] = useState(
+    JSON.parse(localStorage.getItem("votes")) || []
+  );
   const [showForm, setShowForm] = useState(false);
   const [voteName, setVoteName] = useState("");
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [candidates, setCandidates] = useState([]);
   const [name, setName] = useState("");
-  const [image, setImage] = useState("");
+  const [imageFile, setImageFile] = useState(null); // Updated state for image file
   const [pledge, setPledge] = useState("");
   const [currentVoteIndex, setCurrentVoteIndex] = useState(null);
   const [waitingVotes, setWaitingVotes] = useState([]);
@@ -45,6 +57,7 @@ const Admin = () => {
       };
       setVotes([...votes, newVote]);
       setWaitingVotes([...waitingVotes, newVote]);
+      localStorage.setItem("votes", JSON.stringify([...votes, newVote]));
       setShowForm(false);
       setVoteName("");
       setStartTime("");
@@ -58,10 +71,20 @@ const Admin = () => {
   };
 
   const handleAddCandidate = () => {
-    setCandidates([...candidates, { name, image, pledge }]);
-    setName("");
-    setImage("");
-    setPledge("");
+    // Check if an image file is selected
+    if (imageFile) {
+      const reader = new FileReader();
+      reader.readAsDataURL(imageFile);
+      reader.onloadend = () => {
+        setCandidates([...candidates, { name, image: reader.result, pledge }]);
+        setName("");
+        setImageFile(null); // Reset image file state after adding candidate
+        setPledge("");
+      };
+    } else {
+      // If no image file is selected, display an alert
+      alert("이미지를 선택하세요.");
+    }
   };
 
   useEffect(() => {
@@ -89,6 +112,31 @@ const Admin = () => {
     );
   }, [votes]);
 
+  const renderVoteDetails = (vote, index) => {
+    return (
+      <div key={index}>
+        <h2>{vote.voteName}</h2>
+        <p>시작시간: {vote.startTime}</p>
+        <p>종료시간: {vote.endTime}</p>
+        <h3>후보자</h3>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          {vote.candidates.map((candidate, idx) => (
+            <div key={idx} style={{ marginRight: "20px" }}>
+              <p>이름: {candidate.name}</p>
+              <img
+                src={candidate.image}
+                alt={candidate.name}
+                style={{ width: "100px", height: "100px" }}
+              />
+              <p>한줄 공약: {candidate.pledge}</p>
+            </div>
+          ))}
+        </div>
+        <button onClick={() => handleDeleteVote(index)}>삭제하기</button>
+      </div>
+    );
+  };
+
   const handleToggleDetails = (index) => {
     setCurrentVoteIndex((prevIndex) => (prevIndex === index ? null : index));
   };
@@ -100,203 +148,125 @@ const Admin = () => {
   };
 
   return (
-    <div
-      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-    >
-      <h1>투표 관리페이지</h1>
-      <button
-        style={{
-          width: "400px",
-          height: "60px",
-          fontSize: "1.5rem",
-          marginBottom: "20px",
-        }}
-        onClick={handleToggleCreateForm}
-      >
-        {showCreateForm ? "투표 생성하기" : "투표 생성하기"}
-      </button>
-      {showCreateForm && (
-        <div>
-          <input
-            type="text"
-            placeholder="투표명"
-            value={voteName}
-            onChange={(e) => setVoteName(e.target.value)}
-          />
-          <div style={{ marginBottom: "5px" }}></div>
-          <input
-            type="text"
-            placeholder="시작: YYYY-MM/DD TT:TT"
-            value={startTime}
-            onChange={(e) => setStartTime(e.target.value)}
-          />
-          <div style={{ marginBottom: "5px" }}></div>
-          <input
-            type="text"
-            placeholder="종료: YYYY-MM/DD TT:TT"
-            value={endTime}
-            onChange={(e) => setEndTime(e.target.value)}
-          />
-          <div style={{ marginBottom: "5px" }}></div>
-          <div>
-            <h4 style={{ margin: "10px 0" }}>후보자들</h4>
-            <input
-              type="text"
-              placeholder="이름"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <div style={{ marginBottom: "5px" }}></div>
-            <input
-              type="text"
-              placeholder="사진 URL"
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
-            />
-            <div style={{ marginBottom: "5px" }}></div>
-            <input
-              type="text"
-              placeholder="한줄 공약"
-              value={pledge}
-              onChange={(e) => setPledge(e.target.value)}
-            />
-            <div style={{ marginBottom: "5px" }}></div>
-            <button onClick={handleAddCandidate}>후보자 추가하기</button>
-          </div>
-          {candidates.map((candidate, index) => (
-            <div key={index}>
-              <p>이름: {candidate.name}</p>
-              <img
-                src={candidate.image}
-                alt={candidate.name}
-                style={{ width: "100px", height: "100px" }}
+    <ContainerWrapper>
+      <AdminHeader> 투표 관리 페이지 </AdminHeader>
+      <AdminContainer>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginTop: "20px",
+          }}
+        >
+          <StyledButtonLarge onClick={handleToggleCreateForm}>
+            {showCreateForm ? "투표 생성하기" : "투표 생성하기"}
+          </StyledButtonLarge>
+          {showCreateForm && (
+            <div>
+              <input
+                type="text"
+                placeholder="투표명"
+                value={voteName}
+                onChange={(e) => setVoteName(e.target.value)}
               />
-              <p>한줄 공약: {candidate.pledge}</p>
+              <div style={{ marginBottom: "5px" }}></div>
+              <input
+                type="text"
+                placeholder="시작: YYYY-MM/DD TT:TT"
+                value={startTime}
+                onChange={(e) => setStartTime(e.target.value)}
+              />
+              <div style={{ marginBottom: "5px" }}></div>
+              <input
+                type="text"
+                placeholder="종료: YYYY-MM/DD TT:TT"
+                value={endTime}
+                onChange={(e) => setEndTime(e.target.value)}
+              />
+              <div style={{ marginBottom: "5px" }}></div>
+              <div>
+                <h4 style={{ margin: "10px 0" }}>후보자들</h4>
+                <input
+                  type="text"
+                  placeholder="이름"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <div style={{ marginBottom: "5px" }}></div>
+                <input
+                  type="file" // Change input type to file
+                  onChange={(e) => setImageFile(e.target.files[0])} // Set selected image file to state
+                />
+                <div style={{ marginBottom: "5px" }}></div>
+
+                <input
+                  type="text"
+                  placeholder="한줄 소개"
+                  value={pledge}
+                  onChange={(e) => setPledge(e.target.value)}
+                />
+                <div style={{ marginBottom: "5px" }}></div>
+                <StyledButtonSmall onClick={handleAddCandidate}>
+                  후보자 추가
+                </StyledButtonSmall>
+              </div>
+              {candidates.map((candidate, index) => (
+                <div key={index}>
+                  <p>이름: {candidate.name}</p>
+                  <img
+                    src={candidate.image}
+                    alt={candidate.name}
+                    style={{ width: "100px", height: "100px" }}
+                  />
+                  <p>한줄 소개: {candidate.pledge}</p>
+                </div>
+              ))}
+              <StyledDivCenter>
+                <StyledButtonSmall onClick={handleRegisterVote}>
+                  투표 등록하기
+                </StyledButtonSmall>
+                <StyledButtonSmall onClick={handleCancelVote}>
+                  취소하기
+                </StyledButtonSmall>
+              </StyledDivCenter>
             </div>
-          ))}
+          )}
           <div
             style={{
-              marginTop: "10px",
               display: "flex",
-              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
-            <button
-              onClick={handleRegisterVote}
-              style={{ width: "100px", height: "30px", marginBottom: "20px" }}
-            >
-              투표 등록하기
-            </button>
-            <button
-              onClick={handleCancelVote}
-              style={{
-                width: "100px",
-                height: "30px",
-                marginBottom: "20px",
-                marginLeft: "20px",
-              }}
-            >
-              취소하기
-            </button>
+            {waitingVotes.map((vote, index) => (
+              <div key={index} style={{ marginTop: "20px", width: "400px" }}>
+                <StyledButtonLarge onClick={() => handleToggleDetails(index)}>
+                  {vote.voteName}
+                </StyledButtonLarge>
+                {currentVoteIndex === index && renderVoteDetails(vote, index)}
+              </div>
+            ))}
+            {ongoingVotes.map((vote, index) => (
+              <div key={index} style={{ marginTop: "20px", width: "400px" }}>
+                <StyledButtonLarge onClick={() => handleToggleDetails(index)}>
+                  {vote.voteName}
+                </StyledButtonLarge>
+                {currentVoteIndex === index && renderVoteDetails(vote, index)}
+              </div>
+            ))}
+            {completedVotes.map((vote, index) => (
+              <div key={index} style={{ marginTop: "20px", width: "400px" }}>
+                <StyledButtonLarge onClick={() => handleToggleDetails(index)}>
+                  {vote.voteName}
+                </StyledButtonLarge>
+                {currentVoteIndex === index && renderVoteDetails(vote, index)}
+              </div>
+            ))}
           </div>
         </div>
-      )}
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-        {waitingVotes.map((vote, index) => (
-          <div key={index} style={{ marginTop: "20px", width: "400px" }}>
-            <button
-              style={{ width: "100%", height: "60px", fontSize: "1.5rem" }}
-              onClick={() => handleToggleDetails(index)}
-            >
-              {vote.voteName}
-            </button>
-            {currentVoteIndex === index && (
-              <div>
-                <h2>{vote.voteName}</h2>
-                <p>시작시간: {vote.startTime}</p>
-                <p>종료시간: {vote.endTime}</p>
-                <h3>후보자</h3>
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                  {vote.candidates.map((candidate, idx) => (
-                    <div key={idx} style={{ marginRight: "20px" }}>
-                      <p>이름: {candidate.name}</p>
-                      <img
-                        src={candidate.image}
-                        alt={candidate.name}
-                        style={{ width: "100px", height: "100px" }}
-                      />
-                    </div>
-                  ))}
-                </div>
-                <button onClick={() => handleDeleteVote(index)}>삭제하기</button>
-              </div>
-            )}
-          </div>
-        ))}
-        {ongoingVotes.map((vote, index) => (
-          <div key={index} style={{ marginTop: "20px", width: "400px" }}>
-            <button
-              style={{ width: "100%", height: "60px", fontSize: "1.5rem" }}
-              onClick={() => handleToggleDetails(index)}
-            >
-              {vote.voteName}
-            </button>
-            {currentVoteIndex === index && (
-              <div>
-                <h2>{vote.voteName}</h2>
-                <p>시작시간: {vote.startTime}</p>
-                <p>종료시간: {vote.endTime}</p>
-                <h3>후보자</h3>
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                  {vote.candidates.map((candidate, idx) => (
-                    <div key={idx} style={{ marginRight: "20px" }}>
-                      <p>이름: {candidate.name}</p>
-                      <img
-                        src={candidate.image}
-                        alt={candidate.name}
-                        style={{ width: "100px", height: "100px" }}
-                      />
-                    </div>
-                  ))}
-                </div>
-                <button onClick={() => handleDeleteVote(index)}>삭제하기</button>
-              </div>
-            )}
-          </div>
-        ))}
-        {completedVotes.map((vote, index) => (
-          <div key={index} style={{ marginTop: "20px", width: "400px" }}>
-            <button
-              style={{ width: "100%", height: "60px", fontSize: "1.5rem" }}
-              onClick={() => handleToggleDetails(index)}
-            >
-              {vote.voteName}
-            </button>
-            {currentVoteIndex === index && (
-              <div>
-                <h2>{vote.voteName}</h2>
-                <p>시작시간: {vote.startTime}</p>
-                <p>종료시간: {vote.endTime}</p>
-                <h3>후보자</h3>
-                <div style={{ display: "flex", justifyContent: "center" }}>
-                  {vote.candidates.map((candidate, idx) => (
-                    <div key={idx} style={{ marginRight: "20px" }}>
-                      <p>이름: {candidate.name}</p>
-                      <img
-                        src={candidate.image}
-                        alt={candidate.name}
-                        style={{ width: "100px", height: "100px" }}
-                      />
-                    </div>
-                  ))}
-                </div>
-                <button onClick={() => handleDeleteVote(index)}>삭제하기</button>
-              </div>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
+      </AdminContainer>
+    </ContainerWrapper>
   );
 };
 
