@@ -8,7 +8,7 @@ import VoteData from "./Data/PartyData";
 import Admin from "./pages/Admin.page";
 import Results from "./pages/Results.page";
 import VoteLog from "./pages/VoteLog.page";
-import Main from './pages/Main.page'; // Main page import
+import Main from "./pages/Main.page"; // Main page import
 import Login from "./pages/Login.page"; // Assuming your Login page is in the pages folder
 
 const EMPTY_USER = {
@@ -31,7 +31,7 @@ function App() {
   );
 
   const [votes, setVotes] = useState(votesLocalData);
-  
+
   useEffect(() => {
     localStorage.setItem("voteData", JSON.stringify(votes));
   }, [votes]);
@@ -58,7 +58,6 @@ function App() {
           setCurrentPage={setCurrentPage}
         />
       )}
-
       {!isCurrentPage(login) && (
         <Navbar
           setCurrentPage={setCurrentPage}
@@ -66,14 +65,21 @@ function App() {
           setUser={setLoggedUser}
         />
       )}
-
       {isCurrentPage(vote) && (
         <Vote voter={loggedUser} votes={votes} setVotes={setVotes} />
       )}
-      {isCurrentPage(results) && <Results users={database} candidatesList={votes} />}
-      {isCurrentPage(admin) && <Admin users={database} candidatesList={votes} />}
+      {isCurrentPage("results") && (
+        <Results
+          users={database}
+          candidatesList={votes}
+          voteTitle={currentPage.voteTitle}
+        />
+      )}
+      {isCurrentPage(admin) && (
+        <Admin users={database} candidatesList={votes} />
+      )}
       {isCurrentPage(voteLog) && <VoteLog votes={votes} />}
-      {isCurrentPage(main) && <Main />} {/* Render Main page */}
+      {isCurrentPage(main) && <Main setCurrentPage={setCurrentPage} />}{" "}
     </div>
   );
 }

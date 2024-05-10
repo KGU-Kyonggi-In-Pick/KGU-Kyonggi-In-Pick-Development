@@ -68,12 +68,12 @@ const Navbar = ({ user, setUser, setCurrentPage }) => {
             <button type="button" className="dropdown-btn" onClick={handleClickedMain}>
               Main
             </button>
-            <button type="button" className="dropdown-btn" onClick={handleClickedVote}>
+            {/* <button type="button" className="dropdown-btn" onClick={handleClickedVote}>
               Vote
             </button>
             <button type="button" className="dropdown-btn" onClick={handleClickedResults}>
              Vote Results
-            </button>
+            </button> */}
             <button type="button" className="dropdown-btn" onClick={handleClickedVoteLog}>
               Vote Log
             </button>
