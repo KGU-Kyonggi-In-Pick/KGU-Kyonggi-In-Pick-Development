@@ -20,7 +20,7 @@ const getChart = (labels, data) => {
           label: "득표 수",
           data: data,
           borderWidth: 1,
-          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+          backgroundColor: 'rgba(40, 80, 150, 0.7)',
         },
       ],
     },
