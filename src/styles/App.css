@@ -279,7 +279,7 @@ ul {
   padding: 0.375rem 0.75rem;
   border-radius: var(--borderRadius);
   background: var(--backgroundColor);
-  border: 1px solid var(--grey-200);
+  border: 2px solid var(--clr-red-dark);
 }
 .form-input,
 .form-select,
