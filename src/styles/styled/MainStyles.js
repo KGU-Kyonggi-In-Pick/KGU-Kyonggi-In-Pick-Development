@@ -7,7 +7,7 @@ export const MainPageContainer = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color: #8420283a;  // Light red background to match other pages
+  background-color: #c7c9ef3a;  // Light red background to match other pages
 `;
 
 // Container for a list of temporary votes
