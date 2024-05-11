@@ -68,7 +68,7 @@ html {
   --black: #222;
   --white: #fff;
   --red-light: #f8d7da;
-  --red-dark: #842029;
+  --red-dark: #2e6191;
   --green-light: #d1e7dd;
   --green-dark: #0f5132;
 
@@ -367,7 +367,7 @@ ul {
   box-shadow: var(--dark-shadow);
   padding: 0 0 1.5rem 0;
   text-align: center;
-  border: #510f0f9e 3px solid;
+  border: #4045d984 3px solid;
 
   transition: 0.15s transform linear;
 }
@@ -378,7 +378,7 @@ ul {
 }
 
 .card img {
-  background-color: #510f0f84;
+  background-color: #4045d984;
   width: 300px;
   border-top-left-radius: var(--radius);
   border-top-right-radius: var(--radius);
@@ -504,7 +504,7 @@ Modal
   gap: 20px;
   min-height: calc(100vh - 6rem);
   align-items: center;
-  background-color: #8420283a;
+  background-color: #c7c9ef3a;
   padding-bottom: 20px;
 }
 .vote-page h1, .admin-page h1 {
@@ -624,7 +624,7 @@ canvas {
   gap: 20px;
   min-height: calc(100vh - 6rem);
   align-items: center;
-  background-color: #8420283a;  /* 배경색 적용 */
+  background-color: #c7c9ef3a;  /* 배경색 적용 */
   padding-bottom: 20px;
 }
 
@@ -656,7 +656,7 @@ canvas {
   box-shadow: var(--dark-shadow);
   padding: 0 0 1.5rem 0;
   text-align: center;
-  border: #510f0f9e 3px solid;
+  border: #4045d984 3px solid;
 }
 
 .results-card:hover {
@@ -665,7 +665,7 @@ canvas {
 }
 
 .results-card img {
-  background-color: #510f0f84;
+  background-color: #4045d984;
   width: 300px;
   border-top-left-radius: var(--radius);
   border-top-right-radius: var(--radius);
@@ -707,7 +707,7 @@ canvas {
   gap: 20px;
   min-height: calc(100vh - 6rem);
   align-items: center;
-  background-color: #8420283a;  /* 배경색 적용 */
+  background-color: #c7c9ef3a;  /* 배경색 적용 */
   padding-bottom: 20px;
 }
 
@@ -761,7 +761,7 @@ canvas {
 }
 
 .log-card img {
-  background-color: #c2535384;
+  background-color: #4045d984;
   width: 300px;
   border-top-left-radius: var(--radius);
   border-top-right-radius: var(--radius);
