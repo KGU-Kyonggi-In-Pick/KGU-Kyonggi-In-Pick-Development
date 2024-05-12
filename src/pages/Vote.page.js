@@ -1,9 +1,10 @@
+// Vote.page.js
 import React, { useState } from "react";
 import PartyCard from "../components/PartyCard.component";
 
 const REMOVE_VOTE = -1;
 
-const isVotedBefore = (voter,votes) => {
+export const isVotedBefore = (voter, votes) => {
   let isVoted = false;
   votes.forEach((candidate) => {
     if (candidate.voters.includes(voter.id)) {
@@ -15,7 +16,7 @@ const isVotedBefore = (voter,votes) => {
 
 const Vote = ({ setVotes, votes, voter }) => {
   
-  const [isAbleToVote, setIsAbleToVote] = useState(!isVotedBefore(voter,votes));
+  const [isAbleToVote, setIsAbleToVote] = useState(!isVotedBefore(voter, votes));
   const [isCurrentlyVoting, setIsCurrentlyVoting] = useState(false);
 
   const removeVote = () => {

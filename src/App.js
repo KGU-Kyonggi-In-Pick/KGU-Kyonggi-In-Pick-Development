@@ -8,8 +8,8 @@ import VoteData from "./Data/PartyData";
 import Admin from "./pages/Admin.page";
 import Results from "./pages/Results.page";
 import VoteLog from "./pages/VoteLog.page";
-import Main from "./pages/Main.page"; // Main page import
-import Login from "./pages/Login.page"; // Assuming your Login page is in the pages folder
+import Main from "./pages/Main.page";
+import Login from "./pages/Login.page";
 
 const EMPTY_USER = {
   StudentID: "",
@@ -20,14 +20,14 @@ const EMPTY_USER = {
 
 const userInfo = JSON.parse(localStorage.getItem("loggedUser")) || EMPTY_USER;
 
-const [vote, login, admin, results, voteLog, main] = PAGES; // Add main page constant
+const [vote, login, admin, results, voteLog, main] = PAGES;
 
 const votesLocalData = JSON.parse(localStorage.getItem("voteData")) || VoteData;
 
 function App() {
   const [loggedUser, setLoggedUser] = useState(userInfo);
   const [currentPage, setCurrentPage] = useState(
-    userInfo.StudentID === "" ? login : main // Redirect to main if the user is already logged in
+    userInfo.StudentID === "" ? login : main
   );
 
   const [votes, setVotes] = useState(votesLocalData);
@@ -41,7 +41,7 @@ function App() {
     if (loggedUser.StudentID === "") {
       setCurrentPage(login);
     } else {
-      setCurrentPage(main); // Default page to redirect once logged in
+      setCurrentPage(main);
     }
   }, [loggedUser]);
 
@@ -78,7 +78,12 @@ function App() {
       {isCurrentPage(admin) && (
         <Admin users={database} candidatesList={votes} />
       )}
-      {isCurrentPage(voteLog) && <VoteLog votes={votes} />}
+      {isCurrentPage(voteLog) && (
+        <VoteLog
+          votes={votes}
+          currentUser={loggedUser}
+        />
+      )}
       {isCurrentPage(main) && <Main setCurrentPage={setCurrentPage} />}{" "}
     </div>
   );
