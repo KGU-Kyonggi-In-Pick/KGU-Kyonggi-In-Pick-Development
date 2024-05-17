@@ -1,4 +1,3 @@
-
 // kyonggi--main/src/styles/styled/Admin.styled.js
 
 import styled from "styled-components";
