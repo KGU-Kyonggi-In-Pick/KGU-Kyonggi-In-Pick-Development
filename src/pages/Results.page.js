@@ -2,7 +2,7 @@
 import StatisticsChart from "../components/StatisticsChart.component";
 
 const Results = (props) => {
-  const { candidatesList } = props;
+  const { candidatesList } = props; // props 객체에서 candidatesList 속성을 추출하여 변수 candidatesList에 할당
 
   // 최다 득표자 찾기
   const maxVotesCandidate = candidatesList.reduce((prev, curr) =>
