@@ -78,7 +78,7 @@ function App() {
       {isCurrentPage(admin) && (
         <Admin users={database} candidatesList={votes} />
       )} {/* 관리자 페이지가 현재 페이지인 경우 */}
-      {isCurrentPage(voteLog) && <VoteLog votes={votes} />} {/* 투표 로그 페이지가 현재 페이지인 경우 */}
+      {isCurrentPage(voteLog) && <VoteLog votes={votes} voter={loggedUser}/>} {/* 투표 로그 페이지가 현재 페이지인 경우 */}
       {isCurrentPage(main) && <Main setCurrentPage={setCurrentPage} />} {/* 메인 페이지가 현재 페이지인 경우 */}
     </div>
   );
