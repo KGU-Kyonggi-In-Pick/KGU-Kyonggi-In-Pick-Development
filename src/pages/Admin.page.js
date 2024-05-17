@@ -10,7 +10,9 @@ import {
   StyledDivCenter,
 } from "../styles/styled/Admin.styled";
 
+// Admin 페이지 컴포넌트
 const Admin = () => {
+  // 투표 정보 및 상태를 관리하는 상태 변수들
   const [votes, setVotes] = useState(
     JSON.parse(localStorage.getItem("votes")) || []
   );
@@ -20,7 +22,7 @@ const Admin = () => {
   const [endTime, setEndTime] = useState("");
   const [candidates, setCandidates] = useState([]);
   const [name, setName] = useState("");
-  const [imageFile, setImageFile] = useState(null); // Updated state for image file
+  const [imageFile, setImageFile] = useState(null); // 이미지 파일 관련 상태 추가
   const [pledge, setPledge] = useState("");
   const [currentVoteIndex, setCurrentVoteIndex] = useState(null);
   const [waitingVotes, setWaitingVotes] = useState([]);
@@ -28,15 +30,18 @@ const Admin = () => {
   const [completedVotes, setCompletedVotes] = useState([]);
   const [showCreateForm, setShowCreateForm] = useState(false);
 
+  // 투표 생성 폼 토글 함수
   const handleToggleCreateForm = () => {
     setShowCreateForm((prev) => !prev);
   };
 
+  // 투표 추가 버튼 클릭 시 실행되는 함수
   const handleAddVote = () => {
     setCurrentVoteIndex(null);
     setShowForm(true);
   };
 
+  // 투표 취소 함수
   const handleCancelVote = () => {
     setShowForm(false);
     setVoteName("");
@@ -45,6 +50,7 @@ const Admin = () => {
     setCandidates([]);
   };
 
+  // 투표 등록 함수
   const handleRegisterVote = () => {
     if (voteName && startTime && endTime && candidates.length > 0) {
       const newVote = {
@@ -70,23 +76,25 @@ const Admin = () => {
     }
   };
 
+  // 후보자 추가 함수
   const handleAddCandidate = () => {
-    // Check if an image file is selected
+    // 이미지 파일이 선택되었는지 확인
     if (imageFile) {
       const reader = new FileReader();
       reader.readAsDataURL(imageFile);
       reader.onloadend = () => {
         setCandidates([...candidates, { name, image: reader.result, pledge }]);
         setName("");
-        setImageFile(null); // Reset image file state after adding candidate
+        setImageFile(null); // 후보자 추가 후 이미지 파일 상태 초기화
         setPledge("");
       };
     } else {
-      // If no image file is selected, display an alert
+      // 이미지 파일이 선택되지 않았을 경우 알림 표시
       alert("이미지를 선택하세요.");
     }
   };
 
+  // 투표 상태 업데이트 함수
   useEffect(() => {
     const currentDate = new Date();
     const updatedVotes = votes.map((vote) => {
@@ -112,6 +120,7 @@ const Admin = () => {
     );
   }, [votes]);
 
+  // 투표 상세 정보 렌더링 함수
   const renderVoteDetails = (vote, index) => {
     return (
       <div key={index}>
@@ -137,10 +146,12 @@ const Admin = () => {
     );
   };
 
+  // 투표 상세 정보 토글 함수
   const handleToggleDetails = (index) => {
     setCurrentVoteIndex((prevIndex) => (prevIndex === index ? null : index));
   };
 
+  // 투표 삭제 함수
   const handleDeleteVote = (index) => {
     const updatedVotes = [...votes];
     updatedVotes.splice(index, 1);
@@ -159,11 +170,13 @@ const Admin = () => {
             marginTop: "20px",
           }}
         >
+          {/* 투표 생성 버튼 */}
           <StyledButtonLarge onClick={handleToggleCreateForm}>
             {showCreateForm ? "투표 생성하기" : "투표 생성하기"}
           </StyledButtonLarge>
           {showCreateForm && (
             <div>
+              {/* 투표 정보 입력 폼 */}
               <input
                 type="text"
                 placeholder="투표명"
@@ -194,9 +207,10 @@ const Admin = () => {
                   onChange={(e) => setName(e.target.value)}
                 />
                 <div style={{ marginBottom: "5px" }}></div>
+                {/* 파일 선택 input */}
                 <input
-                  type="file" // Change input type to file
-                  onChange={(e) => setImageFile(e.target.files[0])} // Set selected image file to state
+                  type="file" // 파일 입력 타입으로 변경
+                  onChange={(e) => setImageFile(e.target.files[0])} // 선택된 이미지 파일 상태로 설정
                 />
                 <div style={{ marginBottom: "5px" }}></div>
 
@@ -211,6 +225,7 @@ const Admin = () => {
                   후보자 추가
                 </StyledButtonSmall>
               </div>
+              {/* 추가된 후보자 목록 표시 */}
               {candidates.map((candidate, index) => (
                 <div key={index}>
                   <p>이름: {candidate.name}</p>
@@ -222,6 +237,7 @@ const Admin = () => {
                   <p>한줄 소개: {candidate.pledge}</p>
                 </div>
               ))}
+              {/* 투표 등록 및 취소 버튼 */}
               <StyledDivCenter>
                 <StyledButtonSmall onClick={handleRegisterVote}>
                   투표 등록하기
@@ -232,6 +248,7 @@ const Admin = () => {
               </StyledDivCenter>
             </div>
           )}
+          {/* 투표 목록 표시 */}
           <div
             style={{
               display: "flex",
@@ -239,6 +256,7 @@ const Admin = () => {
               alignItems: "center",
             }}
           >
+            {/* 대기중인 투표 */}
             {waitingVotes.map((vote, index) => (
               <div key={index} style={{ marginTop: "20px", width: "400px" }}>
                 <StyledButtonLarge onClick={() => handleToggleDetails(index)}>
@@ -247,6 +265,7 @@ const Admin = () => {
                 {currentVoteIndex === index && renderVoteDetails(vote, index)}
               </div>
             ))}
+            {/* 진행중인 투표 */}
             {ongoingVotes.map((vote, index) => (
               <div key={index} style={{ marginTop: "20px", width: "400px" }}>
                 <StyledButtonLarge onClick={() => handleToggleDetails(index)}>
@@ -255,6 +274,7 @@ const Admin = () => {
                 {currentVoteIndex === index && renderVoteDetails(vote, index)}
               </div>
             ))}
+            {/* 종료된 투표 */}
             {completedVotes.map((vote, index) => (
               <div key={index} style={{ marginTop: "20px", width: "400px" }}>
                 <StyledButtonLarge onClick={() => handleToggleDetails(index)}>
