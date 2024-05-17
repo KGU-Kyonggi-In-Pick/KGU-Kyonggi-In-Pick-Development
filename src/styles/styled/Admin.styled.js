@@ -10,7 +10,6 @@ export const ContainerWrapper = styled.div`
   gap: 20px;
   min-height: calc(100vh - 6rem);
   align-items: center;
-  background-color: #8420283a;
   padding-bottom: 20px;
 `;
 
