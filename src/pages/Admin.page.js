@@ -13,9 +13,7 @@ import {
 // Admin 페이지 컴포넌트
 const Admin = () => {
   // 투표 정보 및 상태를 관리하는 상태 변수들
-  const [votes, setVotes] = useState(
-    JSON.parse(localStorage.getItem("votes")) || []
-  );
+  const [votes, setVotes] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [voteName, setVoteName] = useState("");
   const [startTime, setStartTime] = useState("");
