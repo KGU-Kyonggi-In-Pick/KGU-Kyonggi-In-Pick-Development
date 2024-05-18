@@ -43,5 +43,9 @@
   "description": "\u0000#\u0000 \u0000k\u0000y\u0000o\u0000n\u0000g\u0000g\u0000i\u0000-\u0000 \u0000 \u0000#\u0000 \u0000k\u0000y\u0000o\u0000n\u0000g\u0000g\u0000i\u0000\u0000",
   "main": "index.js",
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.22.4"
+  }
 }
