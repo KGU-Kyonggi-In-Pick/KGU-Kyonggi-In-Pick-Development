@@ -13,7 +13,7 @@ const VoteLog = ({ votes, voter }) => {
   // 로그인한 사용자의 투표 여부에 따른 메시지 설정
   const userMessage = isVotedBefore(voter, votes)
     ? `${voter.name}님이 투표를 완료했습니다.`
-    : `${voter.name}님이 투표하지 않았습니다.`;
+    : ``;
 
   return (
     <section className="vote-log-page">
