@@ -1,1 +1,1 @@
-#KGU Basic Capstone Project
+#KGU-BasicCapstoneProject
