@@ -1,1 +1,1 @@
-# KGU-BasicCapstoneProject-Backend
+# KGU-BasicCapstoneProject
